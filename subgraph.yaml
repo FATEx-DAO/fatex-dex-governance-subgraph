@@ -5,59 +5,25 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
-    name: Factory
+    name: Governor
     network: mainnet
     source:
-      address: '0xa4EF1da515096DB768Bc47DBC080888795643442'
-      abi: Factory
-      startBlock: 16437500
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      file: ./src/mappings/factory.ts
-      entities:
-        - Pair
-        - Token
-      abis:
-        - name: Factory
-          file: ./abis/factory.json
-        - name: ERC20
-          file: ./abis/ERC20.json
-        - name: ERC20SymbolBytes
-          file: ./abis/ERC20SymbolBytes.json
-        - name: ERC20NameBytes
-          file: ./abis/ERC20NameBytes.json
-      eventHandlers:
-        - event: PairCreated(indexed address,indexed address,address,uint256)
-          handler: handleNewPair
-templates:
-  - kind: ethereum/contract
-    name: Pair
-    network: mainnet
-    source:
-      abi: Pair
+      address: '0xF6e6e7Bd8a051cA0466c7B06Bcb789A789E1f1bc'
+      abi: GovernorAlpha
+      startBlock: 16772435
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
       language: wasm/assemblyscript
       file: ./src/mappings/core.ts
       entities:
-        - Pair
-        - Token
+        - Proposal
+        - VoteReceipt
       abis:
-        - name: Pair
-          file: ./abis/pair.json
-        - name: Factory
-          file: ./abis/factory.json
+        - name: GovernorAlpha
+          file: ./abis/governor-alpha.json
       eventHandlers:
-        - event: Mint(indexed address,uint256,uint256)
-          handler: handleMint
-        - event: Burn(indexed address,uint256,uint256,indexed address)
-          handler: handleBurn
-        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
-          handler: handleSwap
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-        - event: Sync(uint112,uint112)
-          handler: handleSync
+        - event: ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)
+          handler: handleProposalCreated
+        - event: VoteCast(address,uint256,bool,uint256)
+          handler: handleVoteCast
