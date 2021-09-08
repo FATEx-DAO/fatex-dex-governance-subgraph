@@ -24,6 +24,7 @@ export function handleProposalCreated(event: ProposalCreatedEvent): void {
   proposal.endTimestamp = event.params.endTimestamp
   proposal.forVotes = ZERO_BI
   proposal.againstVotes = ZERO_BI
+  proposal.description = event.params.description
   proposal.save()
 }
 

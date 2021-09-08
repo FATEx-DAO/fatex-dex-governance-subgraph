@@ -10,6 +10,7 @@ type Proposal @entity {
   forVotes: BigInt!
   againstVotes: BigInt!
   voteReceipts: [VoteReceipt!]! @derivedFrom(field: "proposal")
+  description: String!
 }
 
 type VoteReceipt @entity {
